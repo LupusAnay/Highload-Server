@@ -5,10 +5,8 @@
 #ifndef HIGHLOAD_SERVER_SERVER_H
 #define HIGHLOAD_SERVER_SERVER_H
 
-#include <vector>
-#include <boost/thread.hpp>
 #include <boost/asio.hpp>
-#include <boost/shared_ptr.hpp>
+#include <boost/thread.hpp>
 #include "Connection.h"
 
 using namespace std;
@@ -19,18 +17,24 @@ class Server : private boost::noncopyable {
 public:
     Server(unsigned short port, unsigned short thread_count);
 
+    ~Server();
+
 private:
+    typedef boost::shared_ptr<boost::thread> threadPtr;
+    typedef vector<threadPtr> threadPool;
+    typedef boost::shared_ptr<Connection> connectionPtr;
+
     io_service service;
 
     ip::tcp::acceptor acceptor;
 
-    vector<boost::shared_ptr<boost::thread>> threads;
+    connectionPtr newConnection;
 
-    boost::shared_ptr<Connection> newConnection;
+    threadPool threads;
 
     void startAccept();
 
-    void handleAccept(boost::system::error_code const &error);
+    void handleAccept(const boost::system::error_code &error);
 };
 
 

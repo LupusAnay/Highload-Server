@@ -9,6 +9,8 @@
 #include <boost/array.hpp>
 #include <boost/bind.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <iostream>
+#include "HTTPHandler.h"
 
 using namespace std;
 using namespace boost::asio;
@@ -22,13 +24,13 @@ public:
     void start();
 
 private:
-    ip::tcp::socket socket;
-    io_service::strand strand;
-    boost::array<char, 4096> buffer;
+    ip::tcp::socket connectionSocket;
+    io_service::strand connectionStrand;
+    boost::array<char, 4096> charBuffer;
 
-    void handleRead(boost::system::error_code const &error, size_t bytes);
+    void handleRead(const boost::system::error_code &error, size_t bytes);
 
-    void handleWrite(boost::system::error_code const &error);
+    void handleWrite(const boost::system::error_code &error);
 };
 
 

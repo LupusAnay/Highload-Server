@@ -19,16 +19,28 @@ Server::Server(unsigned short port, unsigned short thread_count) :
                      boost::function<void()>(boost::bind(&io_service::run, &service))));
 }
 
+Server::~Server() {
+    for_each(threads.begin(), threads.end(),
+                  boost::bind(&io_service::stop, &service));
+    for_each(threads.begin(), threads.end(),
+                  boost::bind(&boost::thread::join, _1));
+}
+
+void Server::handleAccept(const boost::system::error_code &error) {
+    if (!error) {
+        cout << "Accepted" << endl;
+        newConnection->start();
+    } else {
+        cout << "Error while accepting: " << error.message() << endl;
+    }
+    startAccept();
+}
+
 // Creates a Connection object in the newConnection variable
 // and then asynchronously waits for the connection to be received. Uses a handleAccept as a callback
 void Server::startAccept() {
     newConnection = boost::make_shared<Connection, io_service &>(service);
-    acceptor.async_accept(newConnection->getSocket(), boost::bind(&Server::handleAccept, this, _1));
+    acceptor.async_accept(newConnection->getSocket(),
+                          boost::bind(&Server::handleAccept, this, _1));
 }
 
-void Server::handleAccept(boost::system::error_code const &error) {
-    if(!error) {
-        newConnection->start();
-    }
-    startAccept();
-}

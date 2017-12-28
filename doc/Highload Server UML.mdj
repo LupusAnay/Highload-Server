@@ -1255,7 +1255,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-socket: ip_tcp_socket",
+											"text": "-connectionSocket: ip_tcp_socket",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -1284,7 +1284,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-strand: io_service_strand",
+											"text": "-connectionStrand: io_service_strand",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -1313,7 +1313,7 @@
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "-buffer: boost_array<char>",
+											"text": "-charBuffer: boost_array<char>",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5,
 											"wordWrap": false
@@ -5817,7 +5817,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
-									"name": "socket",
+									"name": "connectionSocket",
 									"documentation": "В этом поле хранится умный указатель на сокет сервера.",
 									"visibility": "private",
 									"isStatic": false,
@@ -5836,8 +5836,8 @@
 									"_parent": {
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
-									"name": "strand",
-									"documentation": "Экземпляр класса boost::asio::io_service::strand. Гарантирует, что единовременно может выполняться только одна операция. ",
+									"name": "connectionStrand",
+									"documentation": "Экземпляр класса boost::asio::io_service::connectionStrand. Гарантирует, что единовременно может выполняться только одна операция. ",
 									"visibility": "private",
 									"isStatic": false,
 									"isLeaf": false,
@@ -5855,7 +5855,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
-									"name": "buffer",
+									"name": "charBuffer",
 									"documentation": "В этот буфер записываются данные поступившие в сокет.",
 									"visibility": "private",
 									"isStatic": false,
@@ -5877,7 +5877,7 @@
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
 									"name": "Connection",
-									"documentation": "Конструктор класса Connection. Принимает референс на boost::asio::io_service в качестве параметра, далее инициализирует с его помощью поля Connection::socket и Connection::strand ",
+									"documentation": "Конструктор класса Connection. Принимает референс на boost::asio::io_service в качестве параметра, далее инициализирует с его помощью поля Connection::connectionSocket и Connection::connectionStrand ",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
@@ -5911,7 +5911,7 @@
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
 									"name": "&getSocket",
-									"documentation": "Возвращает ссылку на Connection::socket",
+									"documentation": "Возвращает ссылку на Connection::connectionSocket",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
@@ -5943,7 +5943,7 @@
 										"$ref": "AAAAAAFgjrs9P7nEmeE="
 									},
 									"name": "start",
-									"documentation": "Начинает обработку соединения.  Вызывает boost::asio::ip::tcp::socket::async_read для Connection::socket и использует Connection::handleReadв качестве функции обратного вызова.",
+									"documentation": "Начинает обработку соединения.  Вызывает boost::asio::ip::tcp::connectionSocket::async_read для Connection::connectionSocket и использует Connection::handleReadв качестве функции обратного вызова.",
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
