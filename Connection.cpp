@@ -21,10 +21,10 @@ void Connection::start() {
 void Connection::handleRead(const boost::system::error_code &error, size_t bytes) {
     if (error)
         return;
-
     vector<const_buffer> buffers;
-    buffers.emplace_back(charBuffer.data(), bytes);
-    async_write(connectionSocket, buffers,
+    HTTPHandler handler(string(charBuffer.data()));
+    string response = handler.getResponse();
+    async_write(connectionSocket, buffer(response),
                 connectionStrand.wrap(boost::bind(&Connection::handleWrite, shared_from_this(), _1)));
 }
 
