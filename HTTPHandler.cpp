@@ -48,22 +48,12 @@ HTTPHandler::HTTPHandler(const string &requestData) {
 
         for(auto &i : headersLines) {
             string headerName = i.substr(0, i.find(':'));
-            for(auto &header : request.find("General-Headers")->second) {
-                if(headerName == header.first) {
-                    cout << "Found: " << headerName << endl;
-                    request.find("General-Headers")->second.find(headerName)->second = i.substr(i.find(':'), i.size());
-                }
-            }
-            for(auto &header : request.find("Request-Headers")->second) {
-                if(headerName == header.first) {
-                    cout << "Found: " << headerName << endl;
-                    request.find("Request-Headers")->second.find(headerName)->second = i.substr(i.find(':'), i.size());
-                }
-            }
-            for(auto &header : request.find("Entity-Headers")->second) {
-                if(headerName == header.first) {
-                    cout << "Found: " << headerName << endl;
-                    request.find("Entity-Headers")->second.find(headerName)->second = i.substr(i.find(':'), i.size());
+            for(auto &headerType : request) {
+                for(auto &header : headerType.second) {
+                    if(headerName == header.first) {
+                        cout << "Found: " << headerName << ":" << i.substr(i.find(':') + 1, i.size()) << endl;
+                        header.second = i.substr(i.find(':') + 1, i.size());
+                    }
                 }
             }
         }
