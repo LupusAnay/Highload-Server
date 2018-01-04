@@ -28,7 +28,6 @@ Server::~Server() {
 
 void Server::handleAccept(const boost::system::error_code &error) {
     if (!error) {
-        cout << "Accepted" << endl;
         newConnection->start();
     } else {
         cout << "Error while accepting: " << error.message() << endl;

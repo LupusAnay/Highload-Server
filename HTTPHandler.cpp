@@ -34,15 +34,12 @@ HTTPHandler::HTTPHandler(const string &requestData) {
         request.find("Request-Line")->second.find("Method")->second = requestLineItems.at(0);
         request.find("Request-Line")->second.find("Request-URI")->second = requestLineItems.at(1);
         request.find("Request-Line")->second.find("HTTP-Version")->second = requestLineItems.at(2);
-        cout << "Method: " << request.find("Request-Line")->second.find("Method")->second << endl;
-        cout << "Request-URI: " << request.find("Request-Line")->second.find("Request-URI")->second << endl;
-        cout << "HTTP-Version: " << request.find("Request-Line")->second.find("HTTP-Version")->second << endl;
+
         for (auto &i : headersLines) {
             string headerName = i.substr(0, i.find(':'));
             for (auto &headerType : request) {
                 for (auto &header : headerType.second) {
                     if (headerName == header.first) {
-                        cout << headerName << ":" << i.substr(i.find(':') + 1, i.size()) << endl;
                         header.second = i.substr(i.find(':') + 1, i.size());
                     }
                 }
@@ -63,7 +60,31 @@ string HTTPHandler::getResponse() {
 }
 
 void HTTPHandler::createResponse() {
+    string method = request.find("Request-Line")->second.find("Method")->second;
+    string uri = request.find("Request-Line")->second.find("Request-URI")->second;
+    string body = request.find("Request-Body")->second.find("Body")->second;
+    response = "HTTP/1.1 200 OK\r\n"
+            "Server: Custom/0.0.1\r\n"
+            "Content-Type: application/json\r\n"
+            "Connection: close\r\n"
+            "Accept-Ranges: bytes\r\n\r\n";
 
+    Data dataProcessor;
+
+    vector<string> uriRes = split(uri, "/api/|/");
+    if (method == "GET" && uriRes.size() == 1) {
+        response += dataProcessor.getAll(uriRes[0]);
+    } else if (method == "GET" && uriRes.size() == 2) {
+        response += dataProcessor.getByID(uriRes[0], uriRes[1]);
+    } else if (method == "POST" && uriRes.size() == 1) {
+        response += dataProcessor.addRow(uriRes[0], body);
+    } else if (method == "POST" && uriRes.size() == 2) {
+        response += dataProcessor.update(uriRes[0], uriRes[1], body);
+    } else if (method == "DELETE" && uriRes.size() == 2) {
+        response += dataProcessor.deleteRow(uriRes[0], uriRes[1]);
+    } else {
+        notFound();
+    }
 }
 
 void HTTPHandler::notFound() {
@@ -105,7 +126,7 @@ bool HTTPHandler::validate() {
     } else if (!regex_match(method, regex("GET|DELETE|POST"))) {
         notFound();
         return false;
-    } else if (!regex_match(uri, regex("/api/[a-z0-9_]{3,16}/[0-9]+|/api/[a-z0-9_]{3,16}"))) {
+    } else if (!regex_match(uri, regex("/api/[a-z0-9_]+/[0-9]+|/api/[a-z0-9_]+"))) {
         notFound();
         return false;
     } else {
