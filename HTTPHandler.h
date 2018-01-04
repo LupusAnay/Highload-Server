@@ -23,70 +23,75 @@ private:
     map<string, map<string, string>> request = {
             {"Request-Line",
                              {
-                                     {"Method", ""},
-                                     {"Request-URI", ""},
-                                     {"HTTP-Version",""}
+                                     {"Method",        ""},
+                                     {"Request-URI",      ""},
+                                     {"HTTP-Version",     ""}
                              }
             },
             {"General-Headers",
                              {
-                                     {"Cache-Control",""},
-                                     {"Connection",""},
-                                     {"Date",""},
-                                     {"Pragma",""},
-                                     {"Trailer",""},
-                                     {"Transfer-Encoding",""},
-                                     {"Upgrade",""},
-                                     {"Via",""},
-                                     {"Warning",""},
-                                     {"Upgrade-Insecure-Requests",""}
+                                     {"Cache-Control", ""},
+                                     {"Connection",       ""},
+                                     {"Date",             ""},
+                                     {"Pragma",          ""},
+                                     {"Trailer",          ""},
+                                     {"Transfer-Encoding", ""},
+                                     {"Upgrade",       ""},
+                                     {"Via",          ""},
+                                     {"Warning",  ""},
+                                     {"Upgrade-Insecure-Requests", ""}
                              }},
             {"Request-Headers",
                              {
-                                     {"Accept",""},
-                                     {"Accept-Charset",""},
-                                     {"Accept-Encoding",""},
-                                     {"Accept-Language",""},
-                                     {"Authorization",""},
-                                     {"Expect",""},
-                                     {"From",""},
-                                     {"Host",""},
-                                     {"If-Match",""},
-                                     {"If-Modified-Since",""},
-                                     {"If-None-Match",""},
-                                     {"If-Range",""},
-                                     {"If-Unmodified-Since",""},
-                                     {"Max-Forwards",""},
-                                     {"Proxy-Authorization",""},
-                                     {"Range",""},
-                                     {"Referer",""},
-                                     {"TE",""},
-                                     {"User-Agent",""}
+                                     {"Accept",        ""},
+                                     {"Accept-Charset",   ""},
+                                     {"Accept-Encoding",  ""},
+                                     {"Accept-Language", ""},
+                                     {"Authorization",    ""},
+                                     {"Expect",            ""},
+                                     {"From",          ""},
+                                     {"Host",         ""},
+                                     {"If-Match", ""},
+                                     {"If-Modified-Since",         ""},
+                                     {"If-None-Match", ""},
+                                     {"If-Range", ""},
+                                     {"If-Unmodified-Since", ""},
+                                     {"Max-Forwards", ""},
+                                     {"Proxy-Authorization", ""},
+                                     {"Range", ""},
+                                     {"Referer", ""},
+                                     {"TE", ""},
+                                     {"User-Agent", ""}
                              }},
             {"Entity-Headers",
                              {
-                                     {"Allow",""},
-                                     {"Content-Encoding",""},
-                                     {"Content-Language",""},
-                                     {"Content-Length",""},
-                                     {"Content-Location",""},
-                                     {"Content-MD5",""},
-                                     {"Content-Range",""},
-                                     {"Content-Type",""},
-                                     {"Expires",""},
-                                     {"Last-Modified",""}
+                                     {"Allow",         ""},
+                                     {"Content-Encoding", ""},
+                                     {"Content-Language", ""},
+                                     {"Content-Length",  ""},
+                                     {"Content-Location", ""},
+                                     {"Content-MD5",       ""},
+                                     {"Content-Range", ""},
+                                     {"Content-Type", ""},
+                                     {"Expires",  ""},
+                                     {"Last-Modified",             ""}
                              }},
             {"Request-Body", {}}
     };
     string response = "HTTP/1.1 200 OK\r\n"
-                           "Server: Custom/0.0.1\r\n"
-                           "Date: Sat, 30 Jan 2017 21:31:46 GMT\r\n"
-                           "Content-Type: text/html\r\n"
-                           //"Content-Length: 4096\r\n"
-                           "Last-Modified: Sat, 08 Mar 2014 22:53:30 GMT\r\n"
-                           "Connection: close\r\n"
-                           "Accept-Ranges: bytes\r\n\r\n"
-                           "Hello everyone, it's my new web server!";
+            "Server: Custom/0.0.1\r\n"
+            "Content-Type: text/html\r\n"
+            "Connection: close\r\n"
+            "Accept-Ranges: bytes\r\n\r\n"
+            "Hello everyone, it's my new web server!";
+
+    void createResponse();
+
+    void notFound();
+
+    bool validate();
+
+    void badRequest();
 };
 
 
