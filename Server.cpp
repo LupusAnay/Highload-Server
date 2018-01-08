@@ -8,7 +8,6 @@ Server::Server(unsigned short port, unsigned short thread_count) :
         acceptor(service, ip::tcp::endpoint(ip::tcp::v4(), port)),
         threads(thread_count) {
     // Can use the address already used
-    acceptor.set_option(ip::tcp::acceptor::reuse_address(true));
     acceptor.listen();
     startAccept();
 

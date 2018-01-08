@@ -24,6 +24,7 @@ public:
     void start();
 
 private:
+
     ip::tcp::socket connectionSocket;
     io_service::strand connectionStrand;
     boost::array<char, 4096> charBuffer;
