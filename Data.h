@@ -5,7 +5,6 @@
 #ifndef HIGHLOAD_SERVER_DATA_H
 #define HIGHLOAD_SERVER_DATA_H
 
-#include "sqlite3.h"
 #include <iostream>
 
 using namespace std;
